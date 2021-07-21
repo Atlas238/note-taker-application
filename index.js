@@ -15,19 +15,19 @@ app.get('/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    res.json('?')
+    console.info(`${req.method} request recieved for notes`);
+    res.json(JSON.parse(fs.readFile('./db/db.json')));
 })
 
 app.post('/api/notes', (req, res) => {
-    const currentData = JSON.stringify(fs.readFile('./db/db.json'));
-    fs.writeFile('./db/db.json', JSON.parse(currentData.push(req)), (err) => {
-        console.error(err);
-    })
+    console.info(`${req.method} request recieved to add a note`);
+
+    
 
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-
+    console.info(`${req.method} request recieved for notes`);
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
