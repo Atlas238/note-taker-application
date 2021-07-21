@@ -16,7 +16,9 @@ app.get('/notes', (req, res) => {
 
 app.get('/api/notes', (req, res) => {
     const data = fs.readFile('./db/db.json')
-    res.json(data);
+    for (let i = 0; i < data.length; i++) {
+        res.json(data[i]);
+    }
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
