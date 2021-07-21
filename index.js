@@ -15,10 +15,19 @@ app.get('/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    const data = fs.readFile('./db/db.json')
-    for (let i = 0; i < data.length; i++) {
-        res.json(data[i]);
-    }
+    res.json('?')
+})
+
+app.post('/api/notes', (req, res) => {
+    const currentData = JSON.stringify(fs.readFile('./db/db.json'));
+    fs.writeFile('./db/db.json', JSON.parse(currentData.push(req)), (err) => {
+        console.error(err);
+    })
+
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
