@@ -13,6 +13,6 @@ Our database file can be found in the db folder.
 
 ## Links
 
-- [Github Repository](https://github.com/Atlas238/note-taker-)
+- [Github Repository](https://github.com/Atlas238/note-taker-application)
 
-- [Heroku Deploy](https://)
+- [Heroku Deploy](https://hidden-scrubland-46653.herokuapp.com/)
