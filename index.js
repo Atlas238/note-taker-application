@@ -1,13 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const uniqid = require('uniqid');
 const fs = require('fs');
 const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.json());
 
 app.use(express.static('public'));
 
@@ -39,8 +37,34 @@ app.post('/api/notes', (req, res) => {
     res.send('Recieved Note Add call..');
 });
 
-app.delete('/api/notes', (req, res) => {
-    
+app.delete('/api/notes/:id', (req, res) => {
+
+    console.log(`${req.method} request recieved...`)
+    const recievedId = req.params;
+
+    if (recievedId.id.length > 0) {
+        
+        fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+            // dataParsed is an array of JSON objects....
+            let dataParsed = JSON.parse(data)
+
+            dataParsed.forEach(note => {
+                if (note.id === recievedId.id) {
+                    // console.log(dataParsed.indexOf(note));
+                    dataParsed.splice(dataParsed.indexOf(note), 1);
+                };
+
+                const newData = JSON.stringify(dataParsed);
+                // console.log(newData)
+                fs.writeFile('./db/db.json', newData, (err) => {
+                console.log('Database Updated');
+                })
+            });
+
+        res.send('Delete request processed and confirmed!');
+
+        });
+    };
 });
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
